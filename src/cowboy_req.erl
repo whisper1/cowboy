@@ -1240,7 +1240,13 @@ response(Status, Headers, RespHeaders, DefaultHeaders, Body, Req=#http_req{
 		_ ->
 			hook
 	end,
-	{ReplyType, Req2}.
+  case Status of
+    ErrorStatus when ErrorStatus > 404 ->
+      lager:info("Cowboy Response With Error: ~p Req: ~p", [Status, Req]),
+      {ReplyType, Req2};
+    _ -> 
+      {ReplyType, Req2}
+  end.
 
 -spec response_connection(cowboy:http_headers(), keepalive | close)
 	-> keepalive | close.
