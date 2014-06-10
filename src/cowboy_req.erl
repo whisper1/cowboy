@@ -1241,6 +1241,9 @@ response(Status, Headers, RespHeaders, DefaultHeaders, Body, Req=#http_req{
 			hook
 	end,
   case Status of
+    ErrorStatus when ErrorStatus < 404 ->
+      lager:info("Cowboy Response with code:", [Status]),
+      {ReplyType, Req2};
     ErrorStatus when ErrorStatus > 404 ->
       lager:info("Cowboy Response With Error: ~p Req: ~p", [Status, Req]),
       {ReplyType, Req2};
