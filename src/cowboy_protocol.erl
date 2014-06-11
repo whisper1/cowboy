@@ -494,6 +494,7 @@ error_terminate(Status, State=#state{socket=Socket, transport=Transport,
 
 -spec error_terminate(cowboy:http_status(), cowboy_req:req(), #state{}) -> ok.
 error_terminate(Status, Req, State) ->
+  lager:info("Error in cowboy_protocol.erl. Status: ~p Req: ~p", [Status, Req]),
 	cowboy_req:maybe_reply(Status, Req),
 	terminate(State).
 

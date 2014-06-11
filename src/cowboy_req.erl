@@ -1038,6 +1038,7 @@ continue(#http_req{socket=Socket, transport=Transport,
 %% Meant to be used internally for sending errors after crashes.
 -spec maybe_reply(cowboy:http_status(), req()) -> ok.
 maybe_reply(Status, Req) ->
+  lager:info("Error in Cowboy maybe_reply: ~p ~p", [Status, Req]),
 	receive
 		{cowboy_req, resp_sent} -> ok
 	after 0 ->
